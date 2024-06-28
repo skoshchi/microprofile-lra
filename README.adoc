@@ -65,3 +65,7 @@ Goals
 == Contributing
 
 Do you want to contribute to this project? link:CONTRIBUTING.adoc[Find out how you can help here].
+
+== Building
+
+This project uses the Apache Maven Wrapper plugin for predictable builds and to build it type `./mvnw clean install`. To check which version of maven the project is currently using type `./mvnw -version`.
