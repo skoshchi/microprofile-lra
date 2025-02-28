@@ -142,6 +142,8 @@ public class TckParticipantTests extends TckTestBase {
         URI lraId = URI
                 .create(checkStatusReadAndCloseResponse(Response.Status.INTERNAL_SERVER_ERROR, response, resourcePath));
 
+        lraTestService.waitForCallbacks(lraId);
+
         lraMetric.assertCompensatedEquals(
                 "Non JAX-RS @Compensate method with CompletionStage<Void> should have been called",
                 1, lraId, ValidLRACSParticipant.class);
@@ -167,6 +169,8 @@ public class TckParticipantTests extends TckTestBase {
         Response response = resourcePath.request().get();
 
         URI lraId = URI.create(checkStatusReadAndCloseResponse(Response.Status.OK, response, resourcePath));
+
+        lraTestService.waitForCallbacks(lraId);
 
         lraMetric.assertCompletedEquals(
                 "Non JAX-RS @Complete method with CompletionStage<Response> should have been called",
