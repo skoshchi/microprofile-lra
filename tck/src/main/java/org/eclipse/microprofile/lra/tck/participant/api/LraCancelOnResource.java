@@ -58,7 +58,7 @@ public class LraCancelOnResource {
     public static final String CANCEL_ON_FAMILY_DEFAULT_4XX = "cancelOnFamilyDefault4xx";
     /**
      * Default return status for cancelling LRA is <code>4xx</code> and <code>5xx</code>
-     * 
+     *
      * @param lraId
      *            The LRA id generated for this action
      * @return JAX-RS response
@@ -73,7 +73,7 @@ public class LraCancelOnResource {
     public static final String CANCEL_ON_FAMILY_DEFAULT_5XX = "cancelOnFamilyDefault5xx";
     /**
      * Default return status for cancelling LRA is <code>4xx</code> and <code>5xx</code>
-     * 
+     *
      * @param lraId
      *            The LRA id generated for this action
      * @return JAX-RS response
@@ -88,7 +88,7 @@ public class LraCancelOnResource {
     public static final String CANCEL_ON_FAMILY_3XX = "cancelOnFamily3xx";
     /**
      * Cancel on family is set to <code>3xx</code>. The <code>3xx</code> return code has to cancel the LRA.
-     * 
+     *
      * @param lraId
      *            The LRA id generated for this action
      * @return JAX-RS response
@@ -103,7 +103,7 @@ public class LraCancelOnResource {
     public static final String CANCEL_ON_301 = "cancelOn301";
     /**
      * Cancel on is set to <code>301</code>. The <code>301</code> return code has to cancel the LRA.
-     * 
+     *
      * @param lraId
      *            The LRA id generated for this action
      * @return JAX-RS response
@@ -119,7 +119,7 @@ public class LraCancelOnResource {
     /**
      * Cancel on family is set to <code>4xx</code>, the code from other families (e.g. for <code>5xx</code> should not
      * cancel but should go with close the LRA.
-     * 
+     *
      * @param lraId
      *            The LRA id generated for this action
      * @return JAX-RS response
@@ -144,7 +144,7 @@ public class LraCancelOnResource {
      * specification mandates that the same participant can be enlisted only once per LRA instance then the
      * {@link Compensate} method {@link #compensateWork(URI)} will be called only once for the test invocation.
      * </p>
-     * 
+     *
      * @param lraId
      *            The LRA id generated for this action
      * @param uriInfo
