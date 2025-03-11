@@ -320,7 +320,7 @@ public @interface LRA {
      * Methods running with an active LRA context must be resilient to it being cancelled while the method is still
      * executing.
      * </p>
-     * 
+     *
      * @return the period for which the LRA is guaranteed to run for before becoming eligible for cancellation.
      */
     long timeLimit() default 0;

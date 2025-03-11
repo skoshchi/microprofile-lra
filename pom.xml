@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.eclipse.microprofile</groupId>
         <artifactId>microprofile-parent</artifactId>
-        <version>2.4</version>
+        <version>2.11</version>
     </parent>
 
     <groupId>org.eclipse.microprofile.lra</groupId>
@@ -34,6 +34,7 @@
 
     <properties>
         <inceptionYear>2018</inceptionYear>
+        <version.microprofile.tck.bom>2.10</version.microprofile.tck.bom>
 
         <eclipse-jarsigner-plugin.version>1.1.4</eclipse-jarsigner-plugin.version>
 <!--        <org.osgi.annotation.versioning.version>1.0.0</org.osgi.annotation.versioning.version>-->

@@ -101,7 +101,7 @@ public class LRAClientOps {
             throws GenericLRAException {
         String lra = invokeRestEndpoint(parentLRA,
                 TCK_NON_PARTICIPANT_RESOURCE_PATH, START_BUT_DONT_END_PATH, 200)
-                        .readEntity(String.class);
+                .readEntity(String.class);
 
         if (timeout > 0L) {
             scheduleCancelation(clientID, toURI(lra), timeout, unit);
