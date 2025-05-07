@@ -59,12 +59,26 @@ public class LRAClientOps {
 
     // synchronize access to the connection since it is shared with the LRA background cancellation code
     private synchronized Response invokeRestEndpoint(URI lra, String basePath, String path, int coerceResponse) {
+
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("invokeRestEndpoint(URI lra, String basePath, String path, int coerceResponse)");
+        System.out.println("lra= " + lra);
+        System.out.println("basePath= " + basePath);
+        System.out.println("path= " + path);
+        System.out.println("coerceResponse= " + coerceResponse);
+
         WebTarget resourcePath = target.path(basePath).path(path).queryParam(STATUS_CODE_QUERY_NAME, coerceResponse);
+
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("resourcePathUri= " + resourcePath.getUri());
+
         Invocation.Builder builder = resourcePath.request();
 
         if (lra != null) {
             builder.header(LRA.LRA_HTTP_CONTEXT_HEADER, lra);
         }
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("builder= " + builder.get().toString());
 
         return builder.put(Entity.text(""));
     }
@@ -123,8 +137,14 @@ public class LRAClientOps {
     }
 
     public void closeLRA(URI lraId) throws GenericLRAException {
+
         cancelCancelation(lraId);
 
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("invokeRestEndpointAndReturnLRA(lraId, TCK_NON_PARTICIPANT_RESOURCE_PATH, END_PATH, 200);");
+        System.out.println("lraId= " + lraId);
+        System.out.println("TCK_NON_PARTICIPANT_RESOURCE_PATH= " + TCK_NON_PARTICIPANT_RESOURCE_PATH);
+        System.out.println("END_PATH= " + END_PATH);
         invokeRestEndpointAndReturnLRA(lraId, TCK_NON_PARTICIPANT_RESOURCE_PATH, END_PATH, 200);
     }
 
@@ -180,10 +200,15 @@ public class LRAClientOps {
 
     private void cancelCancelation(URI lraId) {
         LRATask lra = new LRATask(null, lraId);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("cancelCancelation");
+        System.out.println("LRATask= " + lra.lra + " , clientId= " + lra.clientId);
 
+        System.out.println("lraTasksk before if= " + lraTasks.toString());
         if (lraTasks.containsKey(lra)) {
             lraTasks.remove(lra).cancel(false);
         }
+        System.out.println("lraTasksk after if= " + lraTasks.toString());
     }
 
     void cleanUp(Logger logger, String testName) {

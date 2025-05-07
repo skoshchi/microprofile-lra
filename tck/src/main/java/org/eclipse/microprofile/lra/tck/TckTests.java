@@ -115,7 +115,15 @@ public class TckTests extends TckTestBase {
      */
     @Test
     public void closeLRA() throws WebApplicationException {
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("startLRA(null, lraClientId(), lraTimeout(), ChronoUnit.MILLIS)");
+        System.out.println("lraClientId= " + lraClientId());
+        System.out.println("lraTimeout= " + lraTimeout());
+
         URI lra = lraClient.startLRA(null, lraClientId(), lraTimeout(), ChronoUnit.MILLIS);
+
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println("LraId= " + lra);
 
         lraClient.closeLRA(lra);
 
