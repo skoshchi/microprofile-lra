@@ -23,7 +23,6 @@ import static org.eclipse.microprofile.lra.annotation.ws.rs.LRA.LRA_HTTP_CONTEXT
 
 import java.net.URI;
 
-import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
 import org.eclipse.microprofile.lra.tck.LRAClientOps;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -41,7 +40,7 @@ import jakarta.ws.rs.core.UriInfo;
 
 @ApplicationScoped
 @Path(NonParticipatingTckResource.TCK_NON_PARTICIPANT_RESOURCE_PATH)
-@LRA(value = LRA.Type.SUPPORTS, end = false)
+// @LRA(value = LRA.Type.SUPPORTS, end = false)
 public class NonParticipatingTckResource extends ResourceParent {
     public static final String TCK_NON_PARTICIPANT_RESOURCE_PATH = "non-participating-tck-resource";
 
@@ -62,22 +61,23 @@ public class NonParticipatingTckResource extends ResourceParent {
 
     @PUT
     @Path(NonParticipatingTckResource.NEVER_PATH)
-    @LRA(value = LRA.Type.NEVER)
+    // @LRA(value = LRA.Type.NEVER)
     public Response neverRunWithLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.ok(lraId).build();
     }
 
     @PUT
     @Path(SUPPORTS_PATH)
-    @LRA(value = LRA.Type.SUPPORTS, end = false)
+    // @LRA(value = LRA.Type.SUPPORTS, end = false)
     public Response supports(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.ok(lraId).build();
     }
 
     @PUT
     @Path(NonParticipatingTckResource.START_AND_END_PATH)
-    @LRA(value = LRA.Type.REQUIRES_NEW, cancelOnFamily = Response.Status.Family.SERVER_ERROR) // default is to end the
-                                                                                              // LRA
+    // @LRA(value = LRA.Type.REQUIRES_NEW, cancelOnFamily = Response.Status.Family.SERVER_ERROR) // default is to end
+    // the
+    // LRA
     public Response startAndEndLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
             @DefaultValue("200") @QueryParam(STATUS_CODE_QUERY_NAME) int coerceStatus) {
         return Response.status(coerceStatus).entity(checkLRANotNull(lraId)).build();
@@ -85,7 +85,7 @@ public class NonParticipatingTckResource extends ResourceParent {
 
     @PUT
     @Path(NonParticipatingTckResource.START_BUT_DONT_END_PATH)
-    @LRA(value = LRA.Type.REQUIRES_NEW, end = false, cancelOnFamily = Response.Status.Family.SERVER_ERROR)
+    // @LRA(value = LRA.Type.REQUIRES_NEW, end = false, cancelOnFamily = Response.Status.Family.SERVER_ERROR)
     public Response startDontEndLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
             @DefaultValue("200") @QueryParam(STATUS_CODE_QUERY_NAME) int coerceStatus) {
         return Response.status(coerceStatus).entity(checkLRANotNull(lraId)).build();
@@ -93,7 +93,8 @@ public class NonParticipatingTckResource extends ResourceParent {
 
     @PUT
     @Path(NonParticipatingTckResource.END_PATH)
-    @LRA(value = LRA.Type.MANDATORY, cancelOnFamily = Response.Status.Family.SERVER_ERROR) // default is to end the LRA
+    // @LRA(value = LRA.Type.MANDATORY, cancelOnFamily = Response.Status.Family.SERVER_ERROR) // default is to end the
+    // LRA
     public Response endLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
             @DefaultValue("200") @QueryParam(STATUS_CODE_QUERY_NAME) int coerceStatus) {
         return Response.status(coerceStatus).entity(checkLRANotNull(lraId)).build();
@@ -101,21 +102,21 @@ public class NonParticipatingTckResource extends ResourceParent {
 
     @PUT
     @Path(NonParticipatingTckResource.START_AND_END_NESTED_PATH)
-    @LRA(value = LRA.Type.NESTED, cancelOnFamily = Response.Status.Family.SERVER_ERROR) // default is to end the LRA
+    // @LRA(value = LRA.Type.NESTED, cancelOnFamily = Response.Status.Family.SERVER_ERROR) // default is to end the LRA
     public Response startAndEndNestedLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.ok(lraId).build();
     }
 
     @PUT
     @Path(NonParticipatingTckResource.START_BUT_DONT_END_NESTED_PATH)
-    @LRA(value = LRA.Type.NESTED, end = false, cancelOnFamily = Response.Status.Family.SERVER_ERROR)
+    // @LRA(value = LRA.Type.NESTED, end = false, cancelOnFamily = Response.Status.Family.SERVER_ERROR)
     public Response startAndDontEndNestedLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.ok(lraId).build();
     }
 
     @PUT
     @Path(NonParticipatingTckResource.START_LRA_VIA_REMOTE_INVOCATION)
-    @LRA(value = LRA.Type.SUPPORTS, end = false, cancelOnFamily = Response.Status.Family.SERVER_ERROR)
+    // @LRA(value = LRA.Type.SUPPORTS, end = false, cancelOnFamily = Response.Status.Family.SERVER_ERROR)
     public Response notSupportedButCallServiceWhichStartsButDoesntEndAnLRA(
             @HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.ok(invokeRestEndpoint(lraId, TCK_NON_PARTICIPANT_RESOURCE_PATH, START_BUT_DONT_END_PATH,

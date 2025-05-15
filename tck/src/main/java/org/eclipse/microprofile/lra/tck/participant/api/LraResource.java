@@ -30,13 +30,10 @@ import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 import org.eclipse.microprofile.lra.LRAResponse;
-import org.eclipse.microprofile.lra.annotation.Compensate;
-import org.eclipse.microprofile.lra.annotation.Complete;
 import org.eclipse.microprofile.lra.annotation.Forget;
 import org.eclipse.microprofile.lra.annotation.ParticipantStatus;
 import org.eclipse.microprofile.lra.annotation.Status;
 import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
-import org.eclipse.microprofile.lra.annotation.ws.rs.Leave;
 import org.eclipse.microprofile.lra.tck.LRAClientOps;
 import org.eclipse.microprofile.lra.tck.LraTckConfigBean;
 import org.eclipse.microprofile.lra.tck.participant.activity.Activity;
@@ -68,7 +65,7 @@ import jakarta.ws.rs.core.UriInfo;
 
 @ApplicationScoped
 @Path(LraResource.LRA_RESOURCE_PATH)
-@LRA(value = LRA.Type.SUPPORTS, end = false)
+// @LRA(value = LRA.Type.SUPPORTS, end = false)
 public class LraResource extends ResourceParent {
     public static final String LRA_RESOURCE_PATH = "lraresource";
     public static final String TRANSACTIONAL_WORK_PATH = "work";
@@ -109,7 +106,7 @@ public class LraResource extends ResourceParent {
     @GET
     @Path("/status")
     @Produces(MediaType.APPLICATION_JSON)
-    @Status
+    // @Status
     public Response status(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
             @HeaderParam(LRA_HTTP_RECOVERY_HEADER) URI recoveryId) {
 
@@ -138,7 +135,7 @@ public class LraResource extends ResourceParent {
     @PUT
     @Path("/leave")
     @Produces(MediaType.APPLICATION_JSON)
-    @Leave
+    // @Leave
     public Response leaveWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
 
         if (lraId != null) {
@@ -155,9 +152,10 @@ public class LraResource extends ResourceParent {
     @PUT
     @Path("/complete")
     @Produces(MediaType.APPLICATION_JSON)
-    @Complete
+    // @Complete
     public Response completeWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
             @HeaderParam(LRA_HTTP_RECOVERY_HEADER) URI recoveryId) {
+        System.out.println("++++++++++++++++++++++++++++++++++++ completeWork");
         lraMetricService.incrementMetric(LRAMetricType.Completed, lraId, LraResource.class);
 
         assertHeaderPresent(lraId, LRA_HTTP_CONTEXT_HEADER); // the TCK expects the implementation to invoke @Complete
@@ -185,7 +183,7 @@ public class LraResource extends ResourceParent {
     @PUT
     @Path("/compensate")
     @Produces(MediaType.APPLICATION_JSON)
-    @Compensate
+    // @Compensate
     public Response compensateWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
             @HeaderParam(LRA_HTTP_RECOVERY_HEADER) URI recoveryId) {
 
@@ -216,7 +214,7 @@ public class LraResource extends ResourceParent {
     @DELETE
     @Path("/forget")
     @Produces(MediaType.APPLICATION_JSON)
-    @Forget
+    // @Forget
     public Response forgetWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
             @HeaderParam(LRA_HTTP_RECOVERY_HEADER) URI recoveryId) {
         lraMetricService.incrementMetric(LRAMetricType.Forget, lraId, LraResource.class);
@@ -244,7 +242,7 @@ public class LraResource extends ResourceParent {
 
     @PUT
     @Path(LraResource.ACCEPT_WORK)
-    @LRA(value = LRA.Type.REQUIRED, end = false)
+    // @LRA(value = LRA.Type.REQUIRED, end = false)
     public Response acceptWork(
             @HeaderParam(LRA_HTTP_RECOVERY_HEADER) URI recoveryId,
             @HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
@@ -260,7 +258,7 @@ public class LraResource extends ResourceParent {
 
     @PUT
     @Path("/supports")
-    @LRA(value = LRA.Type.SUPPORTS, end = false)
+    // @LRA(value = LRA.Type.SUPPORTS, end = false)
     public Response supportsLRACall(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         assertHeaderPresent(lraId, LRA_HTTP_CONTEXT_HEADER);
 
@@ -271,7 +269,7 @@ public class LraResource extends ResourceParent {
 
     @PUT
     @Path("/startViaApi")
-    @LRA(LRA.Type.NOT_SUPPORTED)
+    // @LRA(LRA.Type.NOT_SUPPORTED)
     public Response subActivity(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         assertNotHeaderPresent(lraId);
 
@@ -307,7 +305,7 @@ public class LraResource extends ResourceParent {
 
     @PUT
     @Path(TRANSACTIONAL_WORK_PATH)
-    @LRA(value = LRA.Type.REQUIRED, end = false)
+    // @LRA(value = LRA.Type.REQUIRED, end = false)
     public Response activityWithLRA(@HeaderParam(LRA_HTTP_RECOVERY_HEADER) URI recoveryId,
             @HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         assertHeaderPresent(lraId, LRA_HTTP_CONTEXT_HEADER);
@@ -351,7 +349,7 @@ public class LraResource extends ResourceParent {
     @PUT
     @Path(MANDATORY_LRA_RESOURCE_PATH)
     @Produces(MediaType.TEXT_PLAIN)
-    @LRA(value = LRA.Type.MANDATORY, end = false)
+    // @LRA(value = LRA.Type.MANDATORY, end = false)
     public Response activityWithMandatoryLRA(@HeaderParam(LRA_HTTP_RECOVERY_HEADER) URI recoveryId,
             @HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return activityWithLRA(recoveryId, lraId);
@@ -359,7 +357,7 @@ public class LraResource extends ResourceParent {
 
     @PUT
     @Path("/nestedActivity")
-    @LRA(value = LRA.Type.NESTED, end = true)
+    // @LRA(value = LRA.Type.NESTED, end = true)
     public Response nestedActivity(@HeaderParam(LRA_HTTP_RECOVERY_HEADER) URI recoveryId,
             @HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI nestedLRAId) {
         assertHeaderPresent(nestedLRAId, LRA_HTTP_CONTEXT_HEADER);
@@ -380,14 +378,14 @@ public class LraResource extends ResourceParent {
      */
     @PUT
     @Path(CANCEL_PATH)
-    @LRA(value = LRA.Type.MANDATORY, cancelOnFamily = Response.Status.Family.SERVER_ERROR)
+    // @LRA(value = LRA.Type.MANDATORY, cancelOnFamily = Response.Status.Family.SERVER_ERROR)
     public Response cancelLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.status(500).entity(lraId).build();
     }
 
     @PUT
     @Path("/multiLevelNestedActivity")
-    @LRA(value = LRA.Type.MANDATORY, end = false)
+    // @LRA(value = LRA.Type.MANDATORY, end = false)
     public Response multiLevelNestedActivity(
             @HeaderParam(LRA_HTTP_RECOVERY_HEADER) URI recoveryId,
             @HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI nestedLRAId,
@@ -420,7 +418,7 @@ public class LraResource extends ResourceParent {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @LRA(LRA.Type.NOT_SUPPORTED)
+    // @LRA(LRA.Type.NOT_SUPPORTED)
     public Response findAll() {
         List<Activity> results = activityStore.findAll();
 
@@ -430,7 +428,7 @@ public class LraResource extends ResourceParent {
     @GET
     @Path(TIME_LIMIT)
     @Produces(MediaType.APPLICATION_JSON)
-    @LRA(value = LRA.Type.REQUIRED, timeLimit = 500, timeUnit = ChronoUnit.MILLIS)
+    // @LRA(value = LRA.Type.REQUIRED, timeLimit = 500, timeUnit = ChronoUnit.MILLIS)
     public Response timeLimit(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         assertHeaderPresent(lraId, LRA_HTTP_CONTEXT_HEADER);
 
@@ -457,7 +455,7 @@ public class LraResource extends ResourceParent {
     @GET
     @Path(TIME_LIMIT_HALF_SEC)
     @Produces(MediaType.APPLICATION_JSON)
-    @LRA(value = LRA.Type.REQUIRED, timeLimit = 500, timeUnit = ChronoUnit.MILLIS)
+    // @LRA(value = LRA.Type.REQUIRED, timeLimit = 500, timeUnit = ChronoUnit.MILLIS)
     public Response timeLimitTest2(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         assertHeaderPresent(lraId, LRA_HTTP_CONTEXT_HEADER);
 

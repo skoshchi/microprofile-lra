@@ -23,8 +23,6 @@ import static org.eclipse.microprofile.lra.annotation.ws.rs.LRA.LRA_HTTP_CONTEXT
 
 import java.net.URI;
 
-import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
-
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.Path;
@@ -48,61 +46,61 @@ public abstract class LRATypeTckSuperclass extends ResourceParent {
 
     @GET
     @Path(REQUIRED_PATH)
-    @LRA(value = LRA.Type.REQUIRED)
+    // @LRA(value = LRA.Type.REQUIRED)
     public abstract Response requiredLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(REQUIRES_NEW_PATH)
-    @LRA(value = LRA.Type.REQUIRES_NEW)
+    // @LRA(value = LRA.Type.REQUIRES_NEW)
     public abstract Response requiresNewLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(MANDATORY_PATH)
-    @LRA(value = LRA.Type.MANDATORY)
+    // @LRA(value = LRA.Type.MANDATORY)
     public abstract Response mandatoryLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(SUPPORTS_PATH)
-    @LRA(value = LRA.Type.SUPPORTS)
+    // @LRA(value = LRA.Type.SUPPORTS)
     public abstract Response supportsLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(NOT_SUPPORTED_PATH)
-    @LRA(value = LRA.Type.NOT_SUPPORTED)
+    // @LRA(value = LRA.Type.NOT_SUPPORTED)
     public abstract Response notSupportedLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(NEVER_PATH)
-    @LRA(value = LRA.Type.NEVER)
+    // @LRA(value = LRA.Type.NEVER)
     public abstract Response neverLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(REQUIRED_WITH_END_FALSE_PATH)
-    @LRA(value = LRA.Type.REQUIRED, end = false)
+    // @LRA(value = LRA.Type.REQUIRED, end = false)
     public abstract Response requiredEndLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(REQUIRES_NEW_WITH_END_FALSE_PATH)
-    @LRA(value = LRA.Type.REQUIRES_NEW, end = false)
+    // @LRA(value = LRA.Type.REQUIRES_NEW, end = false)
     public abstract Response requiresNewEndLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(MANDATORY_WITH_END_FALSE_PATH)
-    @LRA(value = LRA.Type.MANDATORY, end = false)
+    // @LRA(value = LRA.Type.MANDATORY, end = false)
     public abstract Response mandatoryEndLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(SUPPORTS_WITH_END_FALSE_PATH)
-    @LRA(value = LRA.Type.SUPPORTS, end = false)
+    // @LRA(value = LRA.Type.SUPPORTS, end = false)
     public abstract Response supportsEndLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(NOT_SUPPORTED_WITH_END_FALSE_PATH)
-    @LRA(value = LRA.Type.NOT_SUPPORTED, end = false)
+    // @LRA(value = LRA.Type.NOT_SUPPORTED, end = false)
     public abstract Response notSupportedEndLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(NEVER_WITH_END_FALSE_PATH)
-    @LRA(value = LRA.Type.NEVER, end = false)
+    // @LRA(value = LRA.Type.NEVER, end = false)
     public abstract Response neverEndLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 }

@@ -52,7 +52,7 @@ public class ResourceParent {
 
     @PUT
     @Path("/after")
-    @AfterLRA
+    // @AfterLRA
     public Response afterLRA(@HeaderParam(LRA_HTTP_ENDED_CONTEXT_HEADER) URI endedLRAId, LRAStatus status) {
         Response response = lraTestService.processAfterLRAInfo(endedLRAId, status, this.getClass(), context.getPath());
         lraMetricService.incrementMetric(LRAMetricType.AfterLRA, endedLRAId, this.getClass());

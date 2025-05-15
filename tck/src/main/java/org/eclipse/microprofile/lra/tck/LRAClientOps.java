@@ -52,6 +52,7 @@ public class LRAClientOps {
     private final Map<LRATask, ScheduledFuture<?>> lraTasks;
 
     public LRAClientOps(WebTarget target) {
+        System.out.println("+++++++++++++++target =" + target.getUri());
         this.target = target;
         this.executor = Executors.newSingleThreadScheduledExecutor();
         this.lraTasks = new ConcurrentHashMap<>();

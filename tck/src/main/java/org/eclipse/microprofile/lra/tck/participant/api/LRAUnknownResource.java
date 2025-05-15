@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 
 import org.eclipse.microprofile.lra.annotation.Compensate;
 import org.eclipse.microprofile.lra.annotation.Complete;
-import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
 import org.eclipse.microprofile.lra.tck.service.LRAMetricService;
 import org.eclipse.microprofile.lra.tck.service.LRAMetricType;
 
@@ -62,7 +61,7 @@ public class LRAUnknownResource extends ResourceParent {
 
     @PUT
     @Path(TRANSACTIONAL_WORK_PATH)
-    @LRA
+    // @LRA
     public Response activityWithLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
             @QueryParam("scenario") Scenario scenario) {
 

@@ -56,7 +56,7 @@ public class TckUnknownStatusTests extends TckTestBase {
     }
 
     @Before
-    public void before() {
+    public void before() throws Exception {
         super.before();
     }
 

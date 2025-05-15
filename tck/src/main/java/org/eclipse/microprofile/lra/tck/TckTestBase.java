@@ -71,7 +71,7 @@ public class TckTestBase {
 
     static WebArchive deploy(String archiveName) {
         return ShrinkWrap
-                .create(WebArchive.class, archiveName + ".war")
+                .create(WebArchive.class, "tck.war")
                 .addPackages(false, TckTestBase.class.getPackage(),
                         LRAResponse.class.getPackage(),
                         Activity.class.getPackage(),
@@ -82,7 +82,7 @@ public class TckTestBase {
     }
 
     @Before
-    public void before() {
+    public void before() throws Exception {
         LOGGER.info("Running test: " + testName.getMethodName());
 
         lraTestService.start(deploymentURL);

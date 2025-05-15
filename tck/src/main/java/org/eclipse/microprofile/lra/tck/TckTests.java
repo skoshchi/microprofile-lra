@@ -44,6 +44,7 @@ import static org.junit.Assert.fail;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.temporal.ChronoUnit;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 import org.eclipse.microprofile.lra.annotation.AfterLRA;
@@ -70,6 +71,7 @@ import jakarta.ws.rs.core.Response;
 
 @RunWith(Arquillian.class)
 public class TckTests extends TckTestBase {
+    private static final Logger LOGGER = Logger.getLogger(TckTestBase.class.getName());
 
     @Inject
     private LRAMetricAssertions lraMetric;
@@ -172,7 +174,7 @@ public class TckTests extends TckTestBase {
     }
 
     @Test
-    public void completeMultiLevelNestedActivity() throws WebApplicationException {
+    public void completeMultiLevelNestedAcetivity() throws WebApplicationException {
         multiLevelNestedActivity(CompletionType.complete, 1);
     }
 
@@ -199,10 +201,12 @@ public class TckTests extends TckTestBase {
         // validate that the implementation still knows about lraId
         assertFalse("LRA '" + lra + "' should be active as it is not closed yet but it is marked as finished",
                 lraTestService.isLRAFinished(lra));
-
+        System.out.println("+====== About to close");
         // close the LRA
         lraClient.closeLRA(lra);
+        System.out.println("Finished");
         lraTestService.waitForCallbacks(lra);
+        System.out.println("Finished 2");
 
         // check that participant was told to complete
         lraMetric.assertCompletedEquals("Wrong completion count for call " + resourcePath.getUri() +
@@ -591,7 +595,12 @@ public class TckTests extends TckTestBase {
                 .header(LRA_HTTP_CONTEXT_HEADER, lra)
                 .put(Entity.text(""));
 
+        System.out.println("+++++++++++++++++++++ multiLevelNestedActivity +++++++++++++++++++++");
+        System.out.println("resourcePath url: " + resourcePath.getUri());
+
         String lraStr = checkStatusReadAndCloseResponse(Response.Status.OK, response, resourcePath);
+        System.out.println("lraStr: " + lraStr);
+
         assertNotNull("expecting a LRA string returned from " + resourcePath.getUri(), lraStr);
         String[] lraArray = lraStr.split(","); // We keep here type String (and not URI) because of the easy
                                                // String.split
@@ -600,6 +609,7 @@ public class TckTests extends TckTestBase {
         IntStream.range(0, uris.length).forEach(i -> {
             try {
                 uris[i] = new URI(lraArray[i]);
+                System.out.println("uris[" + i + "] = " + uris[i]);
             } catch (URISyntaxException e) {
                 fail(String.format("%s (multiLevelNestedActivity): returned an invalid URI: %s",
                         resourcePath.getUri().toString(), e.getMessage()));

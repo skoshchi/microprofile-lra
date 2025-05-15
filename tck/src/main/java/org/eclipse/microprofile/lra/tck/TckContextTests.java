@@ -91,7 +91,7 @@ public class TckContextTests extends TckTestBase {
     }
 
     @Before
-    public void before() {
+    public void before() throws Exception {
         super.before();
         invoke(RESET_PATH, HttpMethod.PUT, null, 200, null, 200);
     }
