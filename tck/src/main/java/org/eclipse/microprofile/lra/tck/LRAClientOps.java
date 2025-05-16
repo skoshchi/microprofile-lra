@@ -79,7 +79,6 @@ public class LRAClientOps {
             builder.header(LRA.LRA_HTTP_CONTEXT_HEADER, lra);
         }
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println("builder= " + builder.get().toString());
 
         return builder.put(Entity.text(""));
     }

@@ -85,7 +85,7 @@ public class TckTestBase {
     public void before() throws Exception {
         LOGGER.info("Running test: " + testName.getMethodName());
 
-        lraTestService.start(deploymentURL);
+        lraTestService.start(DeploymentURLProvider.deploymentURL());
         lraMetricService.clear();
         this.lraClient = lraTestService.getLRAClient();
         this.tckSuiteTarget = lraTestService.getTCKSuiteTarget();

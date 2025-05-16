@@ -24,10 +24,6 @@ import static org.eclipse.microprofile.lra.annotation.ws.rs.LRA.LRA_HTTP_CONTEXT
 import java.net.URI;
 import java.util.logging.Logger;
 
-import org.eclipse.microprofile.lra.annotation.Compensate;
-import org.eclipse.microprofile.lra.annotation.Complete;
-import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
-import org.eclipse.microprofile.lra.annotation.ws.rs.Leave;
 import org.eclipse.microprofile.lra.tck.service.LRAMetricService;
 import org.eclipse.microprofile.lra.tck.service.LRAMetricType;
 
@@ -62,7 +58,7 @@ public class ParticipatingTckResource {
 
     @PUT
     @Path("/compensate")
-    @Compensate
+    // @Compensate
     public Response compensateWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         if (lraId == null) {
             throw new NullPointerException("lraId can't be null as it should be invoked with the context");
@@ -75,7 +71,7 @@ public class ParticipatingTckResource {
 
     @PUT
     @Path("/complete")
-    @Complete
+    // @Complete
     public Response completeWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         if (lraId == null) {
             throw new NullPointerException("lraId can't be null as it should be invoked with the context");
@@ -102,7 +98,7 @@ public class ParticipatingTckResource {
 
     @PUT
     @Path(ACCEPT_PATH)
-    @LRA(value = LRA.Type.REQUIRES_NEW)
+    // @LRA(value = LRA.Type.REQUIRES_NEW)
     public Response acceptLRA(@QueryParam(RECOVERY_PARAM) @DefaultValue("0") Integer recoveryPasses) {
         this.recoveryPasses = recoveryPasses;
 
@@ -117,8 +113,8 @@ public class ParticipatingTckResource {
 
     @PUT
     @Path(LEAVE_PATH)
-    @LRA(value = LRA.Type.SUPPORTS, end = false)
-    @Leave
+    // @LRA(value = LRA.Type.SUPPORTS, end = false)
+    // @Leave
     public Response leaveLRA() {
         return Response.ok().build();
     }
@@ -127,21 +123,21 @@ public class ParticipatingTckResource {
     // as a participant, the implementation MUST report a PRECONDITION_FAILED status
     @PUT
     @Path(ParticipatingTckResource.JOIN_WITH_EXISTING_LRA_PATH)
-    @LRA(value = LRA.Type.MANDATORY, end = false, cancelOnFamily = {})
+    // @LRA(value = LRA.Type.MANDATORY, end = false, cancelOnFamily = {})
     public Response joinWithExistingLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.ok().build();
     }
 
     @PUT
     @Path(ParticipatingTckResource.JOIN_WITH_EXISTING_LRA_PATH2)
-    @LRA(value = LRA.Type.MANDATORY, end = false)
+    // @LRA(value = LRA.Type.MANDATORY, end = false)
     public Response joinWithExistingLRA2(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.ok().build();
     }
 
     @PUT
     @Path(ParticipatingTckResource.JOIN_WITH_NEW_LRA_PATH)
-    @LRA(value = LRA.Type.REQUIRES_NEW, end = false)
+    // @LRA(value = LRA.Type.REQUIRES_NEW, end = false)
     public Response joinWithNewLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.ok().build();
     }

@@ -53,7 +53,7 @@ public class AfterLRAListener extends ResourceParent {
 
     @PUT
     @Path(AFTER_LRA_LISTENER_WORK)
-    @LRA(value = LRA.Type.REQUIRED, end = false)
+    // @LRA(value = LRA.Type.REQUIRED, end = false)
     public Response activityWithLRA(@HeaderParam(LRA_HTTP_RECOVERY_HEADER) URI recoveryId,
             @HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.ok().build();
@@ -61,7 +61,7 @@ public class AfterLRAListener extends ResourceParent {
 
     @PUT
     @Path(AFTER_LRA)
-    @AfterLRA // this method will be called when the LRA associated with the method activityWithLRA finishes
+    // @AfterLRA // this method will be called when the LRA associated with the method activityWithLRA finishes
     public Response afterLRA(@HeaderParam(LRA_HTTP_ENDED_CONTEXT_HEADER) URI lraId, LRAStatus status) {
         return lraTestService.processAfterLRAInfo(lraId, status, AfterLRAListener.class,
                 AFTER_LRA_LISTENER_PATH + AFTER_LRA);

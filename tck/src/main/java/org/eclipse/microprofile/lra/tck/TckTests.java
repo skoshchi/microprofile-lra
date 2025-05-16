@@ -286,6 +286,7 @@ public class TckTests extends TckTestBase {
         // perform a second request to the same method in the same LRA context to validate that multiple participants
         // are not registered
         resourcePath = tckSuiteTarget.path(LRA_RESOURCE_PATH).path(TRANSACTIONAL_WORK_PATH);
+        System.out.println("!!!! [leaveLRA]  resourcePath= " + resourcePath.getUri());
         response = resourcePath.request().header(LRA_HTTP_CONTEXT_HEADER, lra).put(Entity.text(""));
         checkStatusAndCloseResponse(Response.Status.OK, response, resourcePath);
 
@@ -391,7 +392,7 @@ public class TckTests extends TckTestBase {
             throws WebApplicationException, InterruptedException {
         URI lra = lraClient.startLRA(null, lraClientId(), lraTimeout(), ChronoUnit.MILLIS);
         WebTarget resourcePath = tckSuiteTarget.path(path).path(path2);
-
+        System.out.println("!!!!!!!! resourcePath !!!!!!!! = " + resourcePath.getUri());
         Response response = resourcePath
                 .request().header(LRA_HTTP_CONTEXT_HEADER, lra).put(Entity.text(""));
 

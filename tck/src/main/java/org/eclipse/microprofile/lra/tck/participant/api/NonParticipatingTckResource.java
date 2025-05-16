@@ -23,6 +23,7 @@ import static org.eclipse.microprofile.lra.annotation.ws.rs.LRA.LRA_HTTP_CONTEXT
 
 import java.net.URI;
 
+import org.eclipse.microprofile.lra.tck.DeploymentURLProvider;
 import org.eclipse.microprofile.lra.tck.LRAClientOps;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -127,7 +128,7 @@ public class NonParticipatingTckResource extends ResourceParent {
         Client client = ClientBuilder.newClient();
 
         try {
-            WebTarget target = client.target(context.getBaseUri());
+            WebTarget target = client.target(DeploymentURLProvider.deploymentURL());
             return new LRAClientOps(target).invokeRestEndpointAndReturnLRA(lra, basePath, path, coerceResponse);
         } finally {
             client.close();

@@ -22,7 +22,6 @@ package org.eclipse.microprofile.lra.tck;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -117,7 +116,7 @@ public class TckRecoveryTests {
      */
     @Test
     public void testCancelWhenParticipantIsRestarted(@ArquillianResource URL deploymentURL) {
-        clientServiceSetup(deploymentURL);
+        clientServiceSetup(DeploymentURLProvider.deploymentURL());
 
         // starting and enlisting to LRA
         Response response = deploymentTarget
@@ -157,7 +156,7 @@ public class TckRecoveryTests {
      */
     @Test
     public void testCancelWhenParticipantIsUnavailable(@ArquillianResource URL deploymentURL) {
-        clientServiceSetup(deploymentURL);
+        clientServiceSetup(DeploymentURLProvider.deploymentURL());
 
         // starting and enlisting to LRA
         Response response = deploymentTarget
@@ -220,13 +219,13 @@ public class TckRecoveryTests {
         return (long) Math.ceil(timeout * Double.parseDouble(timeoutFactor));
     }
 
-    private void clientServiceSetup(URL deploymentURL) {
+    private void clientServiceSetup(String deploymentURL) {
         try {
             deploymentClient = ClientBuilder.newClient();
-            deploymentTarget = deploymentClient.target(deploymentURL.toURI());
+            deploymentTarget = deploymentClient.target(deploymentURL);
             lraTestService = new LRATestService();
             lraTestService.start(deploymentURL);
-        } catch (URISyntaxException use) {
+        } catch (Exception use) {
             throw new IllegalStateException("Cannot create URI from deployment URL " + deploymentURL, use);
         }
     }

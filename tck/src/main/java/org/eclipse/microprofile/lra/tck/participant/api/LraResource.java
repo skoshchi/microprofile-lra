@@ -34,6 +34,7 @@ import org.eclipse.microprofile.lra.annotation.Forget;
 import org.eclipse.microprofile.lra.annotation.ParticipantStatus;
 import org.eclipse.microprofile.lra.annotation.Status;
 import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
+import org.eclipse.microprofile.lra.tck.DeploymentURLProvider;
 import org.eclipse.microprofile.lra.tck.LRAClientOps;
 import org.eclipse.microprofile.lra.tck.LraTckConfigBean;
 import org.eclipse.microprofile.lra.tck.participant.activity.Activity;
@@ -186,7 +187,7 @@ public class LraResource extends ResourceParent {
     // @Compensate
     public Response compensateWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
             @HeaderParam(LRA_HTTP_RECOVERY_HEADER) URI recoveryId) {
-
+        System.out.println("!!!!!!!!!!!!!!!!!!!!! in compensateWork");
         assertHeaderPresent(lraId, LRA_HTTP_CONTEXT_HEADER); // the TCK expects the implementation to invoke @Compensate
                                                              // methods
         assertHeaderPresent(recoveryId, LRA_HTTP_RECOVERY_HEADER); // the TCK expects the implementation to invoke
@@ -277,7 +278,7 @@ public class LraResource extends ResourceParent {
 
         try {
             client = ClientBuilder.newClient();
-            WebTarget target = client.target(context.getBaseUri());
+            WebTarget target = client.target(DeploymentURLProvider.deploymentURL());
             URI lra = new LRAClientOps(target).startLRA(null, "subActivity", 0L, ChronoUnit.SECONDS);
 
             lraId = lra;

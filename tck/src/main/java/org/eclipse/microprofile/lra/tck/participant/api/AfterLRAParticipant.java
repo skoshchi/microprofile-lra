@@ -27,8 +27,6 @@ import java.net.URI;
 
 import org.eclipse.microprofile.lra.LRAResponse;
 import org.eclipse.microprofile.lra.annotation.AfterLRA;
-import org.eclipse.microprofile.lra.annotation.Compensate;
-import org.eclipse.microprofile.lra.annotation.Complete;
 import org.eclipse.microprofile.lra.annotation.LRAStatus;
 import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
 import org.eclipse.microprofile.lra.tck.service.LRAMetricService;
@@ -61,7 +59,7 @@ public class AfterLRAParticipant {
 
     @PUT
     @Path("/complete")
-    @Complete
+    // @Complete
     public Response completeWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         lraMetricService.incrementMetric(LRAMetricType.Completed, lraId, AfterLRAParticipant.class);
         return LRAResponse.completed();
@@ -69,7 +67,7 @@ public class AfterLRAParticipant {
 
     @PUT
     @Path("/compensate")
-    @Compensate
+    // @Compensate
     public Response compensateWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         lraMetricService.incrementMetric(LRAMetricType.Compensated, lraId, AfterLRAParticipant.class);
 
@@ -78,7 +76,7 @@ public class AfterLRAParticipant {
 
     @PUT
     @Path(AFTER_LRA_PARTICIPANT_WORK)
-    @LRA(value = LRA.Type.REQUIRED, end = false)
+    // @LRA(value = LRA.Type.REQUIRED, end = false)
     public Response activityWithLRA(@HeaderParam(LRA_HTTP_RECOVERY_HEADER) URI recoveryId,
             @HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.ok().build();
@@ -86,7 +84,7 @@ public class AfterLRAParticipant {
 
     @PUT
     @Path(AFTER_LRA)
-    @AfterLRA // this method will be called when the LRA associated with the method activityWithLRA finishes
+    // @AfterLRA // this method will be called when the LRA associated with the method activityWithLRA finishes
     public Response afterEnd(@HeaderParam(LRA_HTTP_ENDED_CONTEXT_HEADER) URI lraId, LRAStatus status) {
         return lraTestService.processAfterLRAInfo(lraId, status, AfterLRAParticipant.class,
                 AFTER_LRA_PARTICIPANT_PATH + AFTER_LRA);

@@ -22,7 +22,6 @@ package org.eclipse.microprofile.lra.tck.service;
 import static org.eclipse.microprofile.lra.annotation.ws.rs.LRA.LRA_HTTP_ENDED_CONTEXT_HEADER;
 
 import java.net.URI;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
@@ -57,9 +56,9 @@ public class LRATestService {
     @Inject
     private LRAMetricService lraMetricService;
 
-    public void start(URL deploymentURL) {
+    public void start(String deploymentURL) {
         tckSuiteClient = ClientBuilder.newClient();
-        tckSuiteTarget = tckSuiteClient.target(URI.create(deploymentURL.toExternalForm()));
+        tckSuiteTarget = tckSuiteClient.target(URI.create(deploymentURL));
         lraClient = new LRAClientOps(tckSuiteTarget);
     }
 
