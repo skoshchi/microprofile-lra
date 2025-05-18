@@ -33,13 +33,10 @@ import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.eclipse.microprofile.lra.annotation.Compensate;
-import org.eclipse.microprofile.lra.annotation.Complete;
 import org.eclipse.microprofile.lra.annotation.Forget;
 import org.eclipse.microprofile.lra.annotation.ParticipantStatus;
 import org.eclipse.microprofile.lra.annotation.Status;
 import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
-import org.eclipse.microprofile.lra.annotation.ws.rs.Leave;
 import org.eclipse.microprofile.lra.tck.service.LRAMetricService;
 import org.eclipse.microprofile.lra.tck.service.LRAMetricType;
 
@@ -158,7 +155,7 @@ public class ContextTckResource {
     }
 
     // start a new LRA which remains active after the method returns
-    @LRA(value = LRA.Type.REQUIRES_NEW, end = false)
+    // @LRA(value = LRA.Type.REQUIRES_NEW, end = false)
     @PUT
     @Path(NEW_LRA_PATH)
     public Response newLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
@@ -171,7 +168,7 @@ public class ContextTckResource {
     }
 
     // end an existing LRA or start and end a new one
-    @LRA(value = LRA.Type.REQUIRED)
+    // @LRA(value = LRA.Type.REQUIRED)
     @PUT
     @Path(REQUIRED_LRA_PATH)
     public Response requiredLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
@@ -182,14 +179,14 @@ public class ContextTckResource {
         return Response.ok().entity(lraId.toASCIIString()).build();
     }
 
-    @LRA(value = LRA.Type.REQUIRES_NEW)
+    // @LRA(value = LRA.Type.REQUIRES_NEW)
     @PUT
     @Path(REQUIRES_NEW_LRA_PATH)
     public Response requiresNew(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.ok().entity(lraId.toASCIIString()).build();
     }
 
-    @LRA(value = LRA.Type.NESTED, end = false)
+    // @LRA(value = LRA.Type.NESTED, end = false)
     @PUT
     @Path(NESTED_LRA_PATH)
     public Response nestedLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI nestedLRA,
@@ -197,7 +194,7 @@ public class ContextTckResource {
         return Response.ok().entity(nestedLRA.toASCIIString() + "," + parentLRA.toASCIIString()).build();
     }
 
-    @LRA(value = LRA.Type.NESTED)
+    // @LRA(value = LRA.Type.NESTED)
     @PUT
     @Path(NESTED_LRA_PATH_WITH_CLOSE)
     public Response nestedLRAWithClose(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI nestedLRA,
@@ -206,7 +203,7 @@ public class ContextTckResource {
     }
 
     // test that outgoing calls do not affect the calling context
-    @LRA(value = LRA.Type.REQUIRED)
+    // @LRA(value = LRA.Type.REQUIRED)
     @PUT
     @Path(CONTEXT_CHECK_LRA_PATH)
     public Response contextCheck(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
@@ -238,7 +235,7 @@ public class ContextTckResource {
         return Response.ok().entity(lraId.toASCIIString()).build();
     }
 
-    @LRA(value = LRA.Type.REQUIRED)
+    // @LRA(value = LRA.Type.REQUIRED)
     @PUT
     @Path(ASYNC_LRA_PATH1)
     public void async1LRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
@@ -249,10 +246,10 @@ public class ContextTckResource {
         });
     }
 
-    @LRA(value = LRA.Type.REQUIRED, // the method must run with an LRA
-            end = true, // the LRA must end when the method completes
-            cancelOnFamily = Response.Status.Family.SERVER_ERROR, // cancel LRA on any 5xx code
-            cancelOn = NOT_FOUND) // cancel LRA on 404
+    // @LRA(value = LRA.Type.REQUIRED, // the method must run with an LRA
+    // end = true, // the LRA must end when the method completes
+    // cancelOnFamily = Response.Status.Family.SERVER_ERROR, // cancel LRA on any 5xx code
+    // cancelOn = NOT_FOUND) // cancel LRA on 404
     @PUT
     @Path(ASYNC_LRA_PATH2)
     public CompletionStage<Response> asyncInvocationWithLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
@@ -268,7 +265,7 @@ public class ContextTckResource {
                 getExcecutorService());
     }
 
-    @LRA(value = LRA.Type.REQUIRED)
+    // @LRA(value = LRA.Type.REQUIRED)
     @PUT
     @Path(ASYNC_LRA_PATH3)
     public CompletionStage<Response> async3LRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
@@ -285,7 +282,7 @@ public class ContextTckResource {
         return response;
     }
 
-    @Leave
+    // @Leave
     @PUT
     @Path(LEAVE_PATH)
     public Response leave(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
@@ -294,7 +291,7 @@ public class ContextTckResource {
 
     @PUT
     @Path("/compensate")
-    @Compensate
+    // @Compensate
     public Response compensateWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
             @HeaderParam(LRA_HTTP_PARENT_CONTEXT_HEADER) URI parent) {
         lraMetricService.incrementMetric(LRAMetricType.Compensated, lraId, ContextTckResource.class);
@@ -307,7 +304,7 @@ public class ContextTckResource {
 
     @PUT
     @Path("/complete")
-    @Complete
+    // @Complete
     public Response completeWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
             @HeaderParam(LRA_HTTP_PARENT_CONTEXT_HEADER) URI parent) {
         lraMetricService.incrementMetric(LRAMetricType.Completed, lraId, ContextTckResource.class);
@@ -320,7 +317,7 @@ public class ContextTckResource {
 
     @GET
     @Path(STATUS_PATH)
-    @Status
+    // @Status
     public Response status(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
             @HeaderParam(LRA_HTTP_PARENT_CONTEXT_HEADER) URI parent) {
         lraMetricService.incrementMetric(LRAMetricType.Status, lraId, ContextTckResource.class);
@@ -333,7 +330,7 @@ public class ContextTckResource {
 
     @DELETE
     @Path("/forget")
-    @Forget
+    // @Forget
     public Response forget(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId,
             @HeaderParam(LRA_HTTP_PARENT_CONTEXT_HEADER) URI parent) {
         lraMetricService.incrementMetric(LRAMetricType.Forget, lraId, ContextTckResource.class);

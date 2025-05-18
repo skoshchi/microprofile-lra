@@ -22,10 +22,7 @@ package org.eclipse.microprofile.lra.tck.participant.api;
 import static org.eclipse.microprofile.lra.annotation.ws.rs.LRA.LRA_HTTP_CONTEXT_HEADER;
 
 import java.net.URI;
-import java.time.temporal.ChronoUnit;
 
-import org.eclipse.microprofile.lra.annotation.AfterLRA;
-import org.eclipse.microprofile.lra.annotation.Compensate;
 import org.eclipse.microprofile.lra.annotation.LRAStatus;
 import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
 import org.eclipse.microprofile.lra.tck.service.LRAMetricService;
@@ -52,21 +49,21 @@ public class RecoveryResource {
 
     @PUT
     @Path(REQUIRED_PATH)
-    @LRA(value = LRA.Type.REQUIRED, end = false)
+    // @LRA(value = LRA.Type.REQUIRED, end = false)
     public Response requiredLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.ok(lraId).build();
     }
 
     @PUT
     @Path(REQUIRED_TIMEOUT_PATH)
-    @LRA(value = LRA.Type.REQUIRED, end = false, timeLimit = LRA_TIMEOUT, timeUnit = ChronoUnit.MILLIS)
+    // @LRA(value = LRA.Type.REQUIRED, end = false, timeLimit = LRA_TIMEOUT, timeUnit = ChronoUnit.MILLIS)
     public Response requiredTimeoutLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.ok(lraId).build();
     }
 
     @PUT
     @Path("/compensate")
-    @Compensate
+    // @Compensate
     public Response compensate(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         lraMetricService.incrementMetric(LRAMetricType.Compensated, lraId, RecoveryResource.class);
 
@@ -75,7 +72,7 @@ public class RecoveryResource {
 
     @PUT
     @Path("/after")
-    @AfterLRA
+    // @AfterLRA
     public Response afterLRA(@HeaderParam(LRA.LRA_HTTP_ENDED_CONTEXT_HEADER) URI lraId, LRAStatus lraStatus) {
         lraMetricService.incrementMetric(LRAMetricType.valueOf(lraStatus.name()), lraId, RecoveryResource.class);
 

@@ -62,14 +62,14 @@ public class ValidLRACSParticipant {
 
     @GET
     @Path(ENLIST_WITH_COMPLETE)
-    @LRA(value = LRA.Type.REQUIRED)
+    // @LRA(value = LRA.Type.REQUIRED)
     public Response enlistWithComplete(@HeaderParam(LRA.LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.ok(lraId).build();
     }
 
     @GET
     @Path(ENLIST_WITH_COMPENSATE)
-    @LRA(value = LRA.Type.REQUIRED, cancelOn = Response.Status.INTERNAL_SERVER_ERROR)
+    // @LRA(value = LRA.Type.REQUIRED, cancelOn = Response.Status.INTERNAL_SERVER_ERROR)
     public Response enlistWithCompensate(@HeaderParam(LRA.LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(lraId).build();
     }
@@ -106,7 +106,7 @@ public class ValidLRACSParticipant {
 
     @PUT
     @Path(ACCEPT_PATH)
-    @LRA(value = LRA.Type.REQUIRES_NEW)
+    // @LRA(value = LRA.Type.REQUIRES_NEW)
     public Response acceptLRA(@QueryParam(RECOVERY_PARAM) @DefaultValue("0") Integer recoveryPasses) {
         this.recoveryPasses = recoveryPasses;
 

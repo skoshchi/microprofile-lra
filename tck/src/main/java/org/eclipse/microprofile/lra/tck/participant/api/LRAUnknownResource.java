@@ -26,8 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import org.eclipse.microprofile.lra.annotation.Compensate;
-import org.eclipse.microprofile.lra.annotation.Complete;
 import org.eclipse.microprofile.lra.tck.service.LRAMetricService;
 import org.eclipse.microprofile.lra.tck.service.LRAMetricType;
 
@@ -73,7 +71,7 @@ public class LRAUnknownResource extends ResourceParent {
     @PUT
     @Path("/complete")
     @Produces(MediaType.APPLICATION_JSON)
-    @Complete
+    // @Complete
     public Response completeWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId)
             throws NotFoundException {
         lraMetricService.incrementMetric(LRAMetricType.Completed, lraId, LRAUnknownResource.class);
@@ -100,7 +98,7 @@ public class LRAUnknownResource extends ResourceParent {
     @PUT
     @Path("/compensate")
     @Produces(MediaType.APPLICATION_JSON)
-    @Compensate
+    // @Compensate
     public Response compensateWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId)
             throws NotFoundException {
 

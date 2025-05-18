@@ -48,57 +48,57 @@ public interface LRATypeTckInterface {
 
     @GET
     @Path(REQUIRED_PATH)
-    @LRA(value = LRA.Type.REQUIRED)
+    // @LRA(value = LRA.Type.REQUIRED)
     Response requiredLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(REQUIRES_NEW_PATH)
-    @LRA(value = LRA.Type.REQUIRES_NEW)
+    // @LRA(value = LRA.Type.REQUIRES_NEW)
     Response requiresNewLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(MANDATORY_PATH)
-    @LRA(value = LRA.Type.MANDATORY)
+    // @LRA(value = LRA.Type.MANDATORY)
     Response mandatoryLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(SUPPORTS_PATH)
-    @LRA(value = LRA.Type.SUPPORTS)
+    // @LRA(value = LRA.Type.SUPPORTS)
     Response supportsLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(NOT_SUPPORTED_PATH)
-    @LRA(value = LRA.Type.NOT_SUPPORTED)
+    // @LRA(value = LRA.Type.NOT_SUPPORTED)
     Response notSupportedLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(NEVER_PATH)
-    @LRA(value = LRA.Type.NEVER)
+    // @LRA(value = LRA.Type.NEVER)
     Response neverLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(REQUIRED_WITH_END_FALSE_PATH)
-    @LRA(value = LRA.Type.REQUIRED, end = false)
+    // @LRA(value = LRA.Type.REQUIRED, end = false)
     Response requiredEndLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(REQUIRES_NEW_WITH_END_FALSE_PATH)
-    @LRA(value = LRA.Type.REQUIRES_NEW, end = false)
+    // @LRA(value = LRA.Type.REQUIRES_NEW, end = false)
     Response requiresNewEndLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(MANDATORY_WITH_END_FALSE_PATH)
-    @LRA(value = LRA.Type.MANDATORY, end = false)
+    // @LRA(value = LRA.Type.MANDATORY, end = false)
     Response mandatoryEndLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(SUPPORTS_WITH_END_FALSE_PATH)
-    @LRA(value = LRA.Type.SUPPORTS, end = false)
+    // @LRA(value = LRA.Type.SUPPORTS, end = false)
     Response supportsEndLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET
     @Path(NOT_SUPPORTED_WITH_END_FALSE_PATH)
-    @LRA(value = LRA.Type.NOT_SUPPORTED, end = false)
+    // @LRA(value = LRA.Type.NOT_SUPPORTED, end = false)
     Response notSupportedEndLRA(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId);
 
     @GET

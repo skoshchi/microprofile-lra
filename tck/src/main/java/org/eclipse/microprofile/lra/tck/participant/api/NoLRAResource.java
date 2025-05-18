@@ -48,7 +48,7 @@ public class NoLRAResource {
     @PUT
     @Path(NON_TRANSACTIONAL_WORK_PATH)
     public Response work2(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
-
+        System.out.println("IN WORK 2");
         if (lraId != null) {
             return Response.status(Response.Status.PRECONDITION_FAILED).entity("Unexpected LRA context").build();
         }
@@ -58,6 +58,8 @@ public class NoLRAResource {
                 .path(LraResource.MANDATORY_LRA_RESOURCE_PATH);
 
         Response response = resourcePath.request().put(Entity.text(""));
+        System.out.println("IN WORK 2 response.status =" + response.getStatus());
+        System.out.println(resourcePath.getUri());
 
         String id = checkStatusAndClose(response, Response.Status.OK.getStatusCode(), true, resourcePath);
 

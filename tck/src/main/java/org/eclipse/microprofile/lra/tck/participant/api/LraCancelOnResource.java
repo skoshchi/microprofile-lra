@@ -26,9 +26,7 @@ import java.util.logging.Logger;
 
 import org.eclipse.microprofile.lra.LRAResponse;
 import org.eclipse.microprofile.lra.annotation.Compensate;
-import org.eclipse.microprofile.lra.annotation.Complete;
 import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
-import org.eclipse.microprofile.lra.annotation.ws.rs.LRA.Type;
 import org.eclipse.microprofile.lra.tck.service.LRAMetricService;
 import org.eclipse.microprofile.lra.tck.service.LRAMetricType;
 
@@ -43,7 +41,6 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
-import jakarta.ws.rs.core.Response.Status.Family;
 import jakarta.ws.rs.core.UriInfo;
 
 @ApplicationScoped
@@ -65,7 +62,7 @@ public class LraCancelOnResource {
      */
     @GET
     @Path(CANCEL_ON_FAMILY_DEFAULT_4XX)
-    @LRA(value = Type.REQUIRED)
+    // @LRA(value = Type.REQUIRED)
     public Response cancelOnFamilyDefault4xx(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.status(Status.BAD_REQUEST).entity(lraId).build();
     }
@@ -80,7 +77,7 @@ public class LraCancelOnResource {
      */
     @GET
     @Path(CANCEL_ON_FAMILY_DEFAULT_5XX)
-    @LRA(value = Type.REQUIRED)
+    // @LRA(value = Type.REQUIRED)
     public Response cancelOnFamilyDefault5xx(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.status(Status.INTERNAL_SERVER_ERROR).entity(lraId).build();
     }
@@ -95,7 +92,7 @@ public class LraCancelOnResource {
      */
     @GET
     @Path(CANCEL_ON_FAMILY_3XX)
-    @LRA(value = Type.REQUIRES_NEW, cancelOnFamily = Family.REDIRECTION)
+    // @LRA(value = Type.REQUIRES_NEW, cancelOnFamily = Family.REDIRECTION)
     public Response cancelOnFamily3xx(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.status(Status.SEE_OTHER).entity(lraId).build();
     }
@@ -110,7 +107,7 @@ public class LraCancelOnResource {
      */
     @GET
     @Path(CANCEL_ON_301)
-    @LRA(value = Type.REQUIRES_NEW, cancelOn = {Status.MOVED_PERMANENTLY})
+    // @LRA(value = Type.REQUIRES_NEW, cancelOn = {Status.MOVED_PERMANENTLY})
     public Response cancelOn301(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.status(Status.MOVED_PERMANENTLY).entity(lraId).build();
     }
@@ -126,7 +123,7 @@ public class LraCancelOnResource {
      */
     @GET
     @Path(NOT_CANCEL_ON_FAMILY_5XX)
-    @LRA(value = Type.REQUIRES_NEW, cancelOnFamily = {Family.CLIENT_ERROR})
+    // @LRA(value = Type.REQUIRES_NEW, cancelOnFamily = {Family.CLIENT_ERROR})
     public Response notCancelOnFamily5xx(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.status(Status.INTERNAL_SERVER_ERROR).entity(lraId).build();
     }
@@ -153,7 +150,7 @@ public class LraCancelOnResource {
      */
     @GET
     @Path(CANCEL_FROM_REMOTE_CALL)
-    @LRA(value = Type.REQUIRES_NEW)
+    // @LRA(value = Type.REQUIRES_NEW)
     public Response cancelFromRemoteCall(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId, @Context UriInfo uriInfo) {
         Client client = ClientBuilder.newClient();
 
@@ -172,7 +169,7 @@ public class LraCancelOnResource {
 
     @PUT
     @Path("/complete")
-    @Complete
+    // @Complete
     public Response completeWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         if (lraId == null) {
             throw new NullPointerException("lraId can't be null as it should be invoked with the context");
@@ -186,7 +183,7 @@ public class LraCancelOnResource {
 
     @PUT
     @Path("/compensate")
-    @Compensate
+    // @Compensate
     public Response compensateWork(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         if (lraId == null) {
             throw new NullPointerException("lraId can't be null as it should be invoked with the context");

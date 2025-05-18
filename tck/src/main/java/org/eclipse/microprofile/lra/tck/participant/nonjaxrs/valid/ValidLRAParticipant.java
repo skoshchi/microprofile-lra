@@ -26,14 +26,11 @@ import java.net.URI;
 import java.util.logging.Logger;
 
 import org.eclipse.microprofile.lra.annotation.AfterLRA;
-import org.eclipse.microprofile.lra.annotation.Compensate;
-import org.eclipse.microprofile.lra.annotation.Complete;
 import org.eclipse.microprofile.lra.annotation.Forget;
 import org.eclipse.microprofile.lra.annotation.LRAStatus;
 import org.eclipse.microprofile.lra.annotation.ParticipantStatus;
 import org.eclipse.microprofile.lra.annotation.Status;
 import org.eclipse.microprofile.lra.annotation.ws.rs.LRA;
-import org.eclipse.microprofile.lra.annotation.ws.rs.LRA.Type;
 import org.eclipse.microprofile.lra.tck.service.LRAMetricService;
 import org.eclipse.microprofile.lra.tck.service.LRAMetricType;
 
@@ -66,7 +63,7 @@ public class ValidLRAParticipant {
 
     @GET
     @Path(ENLIST_WITH_COMPLETE)
-    @LRA(value = Type.REQUIRED)
+    // @LRA(value = Type.REQUIRED)
     public Response enlistWithComplete(@HeaderParam(LRA.LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.ok(lraId).build();
     }
@@ -75,12 +72,12 @@ public class ValidLRAParticipant {
 
     @GET
     @Path(ENLIST_WITH_COMPENSATE)
-    @LRA(value = Type.REQUIRED, cancelOn = Response.Status.INTERNAL_SERVER_ERROR)
+    // @LRA(value = Type.REQUIRED, cancelOn = Response.Status.INTERNAL_SERVER_ERROR)
     public Response enlistWithCompensate(@HeaderParam(LRA.LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(lraId).build();
     }
 
-    @AfterLRA
+    // @AfterLRA
     public void onLRAEnd(URI lraId, LRAStatus status) {
         verifyLRAId(lraId);
 
@@ -90,7 +87,7 @@ public class ValidLRAParticipant {
                 lraId.toASCIIString(), status.name()));
     }
 
-    @Complete
+    // @Complete
     public void completeWithException(URI lraId, URI parentId) {
         verifyLRAId(lraId);
 
@@ -100,7 +97,7 @@ public class ValidLRAParticipant {
         throw new WebApplicationException(Response.ok().build());
     }
 
-    @Compensate
+    // @Compensate
     public ParticipantStatus compensate(URI lraId) {
         verifyLRAId(lraId);
 
@@ -110,7 +107,7 @@ public class ValidLRAParticipant {
         return ParticipantStatus.Compensating;
     }
 
-    @Status
+    // @Status
     public Response status(URI lraId) {
         verifyLRAId(lraId);
 
@@ -121,7 +118,7 @@ public class ValidLRAParticipant {
         return Response.ok(ParticipantStatus.FailedToCompensate).build();
     }
 
-    @Forget
+    // @Forget
     public void forget(URI lraId) {
         verifyLRAId(lraId);
 
@@ -138,7 +135,7 @@ public class ValidLRAParticipant {
 
     @PUT
     @Path(ACCEPT_PATH)
-    @LRA(value = LRA.Type.REQUIRES_NEW)
+    // @LRA(value = LRA.Type.REQUIRES_NEW)
     public Response acceptLRA(@QueryParam(RECOVERY_PARAM) @DefaultValue("0") Integer recoveryPasses) {
         this.recoveryPasses = recoveryPasses;
 

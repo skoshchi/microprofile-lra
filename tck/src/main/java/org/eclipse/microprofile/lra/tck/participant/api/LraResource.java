@@ -311,7 +311,7 @@ public class LraResource extends ResourceParent {
             @HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         assertHeaderPresent(lraId, LRA_HTTP_CONTEXT_HEADER);
         assertHeaderPresent(recoveryId, LRA_HTTP_RECOVERY_HEADER);
-
+        System.out.println("AAAAAAAAAAAAAAAAA I am in activityWithLRA");
         Activity activity = storeActivity(lraId, recoveryId);
 
         if (activity == null) {
@@ -353,6 +353,7 @@ public class LraResource extends ResourceParent {
     // @LRA(value = LRA.Type.MANDATORY, end = false)
     public Response activityWithMandatoryLRA(@HeaderParam(LRA_HTTP_RECOVERY_HEADER) URI recoveryId,
             @HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
+        System.out.println("MMMMMMMMMM I AM IN activityWithMandatoryLRA");
         return activityWithLRA(recoveryId, lraId);
     }
 
@@ -365,7 +366,9 @@ public class LraResource extends ResourceParent {
         assertHeaderPresent(recoveryId, LRA_HTTP_RECOVERY_HEADER);
 
         storeActivity(nestedLRAId, recoveryId);
-
+        System.out.println("!!!! IN nestedActivity !!!!");
+        System.out.println("nestedLRAId = " + nestedLRAId);
+        System.out.println("recoveryId = " + recoveryId);
         return Response.ok(nestedLRAId).build();
     }
 
