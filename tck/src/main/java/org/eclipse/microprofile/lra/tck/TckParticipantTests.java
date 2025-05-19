@@ -75,6 +75,7 @@ public class TckParticipantTests extends TckTestBase {
      * carrying is extracted and acted upon according to LRA response handling
      */
     @Test
+    @Ignore("LRA Proxy cannot verify signatures since the user application doesn't have any LRA dependency.")
     public void validWebApplicationExceptionReturnedTest() {
         WebTarget resourcePath = tckSuiteTarget.path(ValidLRAParticipant.RESOURCE_PATH)
                 .path(ValidLRAParticipant.ENLIST_WITH_COMPLETE);
@@ -107,6 +108,7 @@ public class TckParticipantTests extends TckTestBase {
      *             When Test is interrupted during sleep.
      */
     @Test
+    @Ignore("LRA Proxy cannot verify signatures since the user application doesn't have any LRA dependency.")
     public void validSignaturesChainTest() throws InterruptedException {
         WebTarget resourcePath = tckSuiteTarget.path(ValidLRAParticipant.RESOURCE_PATH)
                 .path(ValidLRAParticipant.ENLIST_WITH_COMPENSATE);
@@ -135,6 +137,7 @@ public class TckParticipantTests extends TckTestBase {
      *             when waiting for the finishing the completion is interrupted
      */
     @Test
+    @Ignore("LRA Proxy cannot verify signatures since the user application doesn't have any LRA dependency.")
     public void testNonJaxRsCompletionStageVoid() throws InterruptedException {
         WebTarget resourcePath = tckSuiteTarget.path(ValidLRACSParticipant.ROOT_PATH)
                 .path(ValidLRACSParticipant.ENLIST_WITH_COMPENSATE);
@@ -164,6 +167,7 @@ public class TckParticipantTests extends TckTestBase {
      *             When Test is interrupted during sleep.
      */
     @Test
+    @Ignore("LRA Proxy cannot verify signatures since the user application doesn't have any LRA dependency.")
     public void testNonJaxRsCompletionStageResponseAndParticipantStatus() throws InterruptedException {
         WebTarget resourcePath = tckSuiteTarget.path(ValidLRACSParticipant.ROOT_PATH)
                 .path(ValidLRACSParticipant.ENLIST_WITH_COMPLETE);
@@ -190,6 +194,7 @@ public class TckParticipantTests extends TckTestBase {
     }
 
     @Test
+    @Ignore("LRA Proxy cannot verify signatures since the user application doesn't have any LRA dependency.")
     public void cancelLraDuringBusinessMethod() throws InterruptedException, ExecutionException, TimeoutException {
         LRAClientOps lraOps = lraTestService.getLRAClient();
         URI lraId = lraOps.startLRA(null, lraClientId(), 0L, ChronoUnit.MILLIS);
