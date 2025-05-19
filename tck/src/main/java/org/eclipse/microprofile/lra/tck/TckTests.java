@@ -194,6 +194,9 @@ public class TckTests extends TckTestBase {
         // validate that the implementation still knows about lraId
         assertFalse("LRA '" + lra + "' should be active as it is not closed yet but it is marked as finished",
                 lraTestService.isLRAFinished(lra));
+        lraClient.closeLRA(lra);
+
+        lraTestService.waitForCallbacks(lra);
         // check that participant was told to complete
         lraMetric.assertCompletedEquals("Wrong completion count for call " + resourcePath.getUri() +
                 ". Expecting the method LRA was completed after joining the existing LRA " + lra,
