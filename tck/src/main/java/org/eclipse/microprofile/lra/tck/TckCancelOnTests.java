@@ -63,7 +63,6 @@ public class TckCancelOnTests extends TckTestBase {
     public void cancelOnFamilyDefault4xx() {
         WebTarget resourcePath = getSuiteTarget().path(LRA_CANCEL_ON_RESOURCE_PATH)
                 .path(LraCancelOnResource.CANCEL_ON_FAMILY_DEFAULT_4XX);
-        System.out.println("[cancelOnFamilyDefault4xx] resourcePath =" + resourcePath);
         Response response = resourcePath.request().get();
 
         URI lraId = URI.create(checkStatusReadAndCloseResponse(Status.BAD_REQUEST, response, resourcePath));

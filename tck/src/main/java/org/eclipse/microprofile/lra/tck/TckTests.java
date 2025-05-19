@@ -118,15 +118,7 @@ public class TckTests extends TckTestBase {
      */
     @Test
     public void closeLRA() throws WebApplicationException {
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println("startLRA(null, lraClientId(), lraTimeout(), ChronoUnit.MILLIS)");
-        System.out.println("lraClientId= " + lraClientId());
-        System.out.println("lraTimeout= " + lraTimeout());
-
         URI lra = lraClient.startLRA(null, lraClientId(), lraTimeout(), ChronoUnit.MILLIS);
-
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println("LraId= " + lra);
 
         lraClient.closeLRA(lra);
 
@@ -202,13 +194,6 @@ public class TckTests extends TckTestBase {
         // validate that the implementation still knows about lraId
         assertFalse("LRA '" + lra + "' should be active as it is not closed yet but it is marked as finished",
                 lraTestService.isLRAFinished(lra));
-        System.out.println("+====== About to close");
-        // close the LRA
-        lraClient.closeLRA(lra);
-        System.out.println("Finished");
-        lraTestService.waitForCallbacks(lra);
-        System.out.println("Finished 2");
-
         // check that participant was told to complete
         lraMetric.assertCompletedEquals("Wrong completion count for call " + resourcePath.getUri() +
                 ". Expecting the method LRA was completed after joining the existing LRA " + lra,
@@ -287,7 +272,6 @@ public class TckTests extends TckTestBase {
         // perform a second request to the same method in the same LRA context to validate that multiple participants
         // are not registered
         resourcePath = tckSuiteTarget.path(LRA_RESOURCE_PATH).path(TRANSACTIONAL_WORK_PATH);
-        System.out.println("!!!! [leaveLRA]  resourcePath= " + resourcePath.getUri());
         response = resourcePath.request().header(LRA_HTTP_CONTEXT_HEADER, lra).put(Entity.text(""));
         checkStatusAndCloseResponse(Response.Status.OK, response, resourcePath);
 
@@ -393,7 +377,6 @@ public class TckTests extends TckTestBase {
             throws WebApplicationException, InterruptedException {
         URI lra = lraClient.startLRA(null, lraClientId(), lraTimeout(), ChronoUnit.MILLIS);
         WebTarget resourcePath = tckSuiteTarget.path(path).path(path2);
-        System.out.println("!!!!!!!! resourcePath !!!!!!!! = " + resourcePath.getUri());
         Response response = resourcePath
                 .request().header(LRA_HTTP_CONTEXT_HEADER, lra).put(Entity.text(""));
 
@@ -598,11 +581,7 @@ public class TckTests extends TckTestBase {
                 .header(LRA_HTTP_CONTEXT_HEADER, lra)
                 .put(Entity.text(""));
 
-        System.out.println("+++++++++++++++++++++ multiLevelNestedActivity +++++++++++++++++++++");
-        System.out.println("resourcePath url: " + resourcePath.getUri());
-
         String lraStr = checkStatusReadAndCloseResponse(Response.Status.OK, response, resourcePath);
-        System.out.println("lraStr: " + lraStr);
 
         assertNotNull("expecting a LRA string returned from " + resourcePath.getUri(), lraStr);
         String[] lraArray = lraStr.split(","); // We keep here type String (and not URI) because of the easy
@@ -612,7 +591,6 @@ public class TckTests extends TckTestBase {
         IntStream.range(0, uris.length).forEach(i -> {
             try {
                 uris[i] = new URI(lraArray[i]);
-                System.out.println("uris[" + i + "] = " + uris[i]);
             } catch (URISyntaxException e) {
                 fail(String.format("%s (multiLevelNestedActivity): returned an invalid URI: %s",
                         resourcePath.getUri().toString(), e.getMessage()));
