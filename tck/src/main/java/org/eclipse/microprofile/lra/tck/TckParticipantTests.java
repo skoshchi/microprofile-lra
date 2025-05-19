@@ -51,7 +51,6 @@ import jakarta.ws.rs.core.Response;
  * TCK to verify that valid non-JAX-RS participant method signatures are respected
  */
 @RunWith(Arquillian.class)
-@Ignore("LRA Proxy cannot verify non-JAX-RS participants if the user application doesn't have any LRA dependency.")
 public class TckParticipantTests extends TckTestBase {
 
     private static final String VALID_DEPLOYMENT = "valid-deploy";
