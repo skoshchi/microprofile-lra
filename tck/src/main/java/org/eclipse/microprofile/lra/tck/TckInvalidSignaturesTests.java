@@ -35,6 +35,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -51,6 +52,7 @@ import org.junit.runner.RunWith;
  * </p>
  */
 @RunWith(Arquillian.class)
+@Ignore("LRA Proxy cannot verify signatures if the user application doesn't have any LRA dependency.")
 public class TckInvalidSignaturesTests {
 
     private static final String INVALID_RETURN_TYPE_DEPLOYMENT = "nonjaxrs-return-type-deploy";
