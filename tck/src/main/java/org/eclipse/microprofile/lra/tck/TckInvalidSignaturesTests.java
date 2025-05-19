@@ -52,7 +52,6 @@ import org.junit.runner.RunWith;
  * </p>
  */
 @RunWith(Arquillian.class)
-@Ignore("LRA Proxy cannot verify signatures if the user application doesn't have any LRA dependency.")
 public class TckInvalidSignaturesTests {
 
     private static final String INVALID_RETURN_TYPE_DEPLOYMENT = "nonjaxrs-return-type-deploy";
